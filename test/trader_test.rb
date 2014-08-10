@@ -35,6 +35,7 @@ class TraderTest <  Minitest::Unit::TestCase
     trader_list.traders.last.id.must_equal 99
     trader_list.traders.first.id.must_equal 0
     trader_list.traders.length.must_equal 100
+    Trader.id.must_equal 100
   end
 end
 
