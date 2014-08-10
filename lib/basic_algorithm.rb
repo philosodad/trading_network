@@ -18,7 +18,7 @@ module BasicAlgorithm
   end
 
   def new_partner
-    partner = [@trader_list.traders - @partners].sample.first
+    partner = (@trader_list.traders - [self] - @partners).sample
     add_partner partner if partner
     partner
   end
