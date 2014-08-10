@@ -29,16 +29,6 @@ class Trader
     @partners.include?(partner)
   end
 
-
-  def prepare_messages
-  end
-
-  def send_messages
-  end
-
-  def process_messages
-  end
-
   def add_partner partner
     @partners << partner
   end

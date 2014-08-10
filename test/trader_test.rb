@@ -19,26 +19,6 @@ class TraderTest <  Minitest::Unit::TestCase
     trader2.has_partner(trader3).must_equal false
   end
 
-  def test_trader_responds_to_prepare_messages
-    trader = Factory.create(:trader, trader_list: TraderList.new())
-    trader.respond_to?(:prepare_messages).must_equal true
-  end
-
-  def test_trader_responds_to_send_messages
-    trader = Factory.create(:trader, trader_list: TraderList.new())
-    trader.respond_to?(:send_messages).must_equal true
-  end
-
-  def test_trader_responds_to_process_messages
-    trader = Factory.create(:trader, trader_list: TraderList.new())
-    trader.respond_to?(:process_messages).must_equal true
-  end
-
-  def test_trader_responds_to_get_round_partner
-    trader = Factory.create(:trader, trader_list: TraderList.new())
-    trader.respond_to?(:get_round_partner).must_equal true
-  end
-
   def test_trader_has_a_trader_list
     TraderList.new({})
     trader_list = Factory.create(:trader_list)
