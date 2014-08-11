@@ -20,9 +20,8 @@ class TraderTest <  Minitest::Unit::TestCase
   end
 
   def test_trader_has_a_trader_list
-    TraderList.new({})
     trader_list = Factory.create(:trader_list)
-    trader = Factory.create(:trader, trader_list: TraderList.new())
+    trader = Factory.create(:trader, trader_list: trader_list)
     trader.trader_list.class.must_equal TraderList
   end
 
@@ -37,5 +36,15 @@ class TraderTest <  Minitest::Unit::TestCase
     trader_list.traders.length.must_equal 100
     Trader.id.must_equal 100
   end
+
+  def test_can_take_a_token
+    trader_list = Factory.create(:trader_list)
+    trader = Factory.create(:trader, trader_list: TraderList.new())
+    trader2 = Factory.create(:trader, partner: trader, trader_list: TraderList.new())
+    token = Factory.create(:token)
+    trader2.pass_token(trader, token)
+    trader.public_tokens.must_be :include?, token
+  end
+
 end
 

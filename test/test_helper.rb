@@ -5,4 +5,4 @@ require_relative '../lib/trader.rb'
 require_relative '../lib/trader_list.rb'
 require_relative '../lib/basic_algorithm.rb'
 require_relative '../lib/token.rb'
-
+require_relative '../lib/basic_mining_algorithm.rb'

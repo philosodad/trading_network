@@ -1,6 +1,18 @@
 require_relative 'test_helper.rb'
 
-class FactoryTest <  Minitest::Unit::TestCase
+class BasicAlgorithmTest <  Minitest::Unit::TestCase
+  def test_step
+    trader_list = Factory.create(:trader_list)
+    existing_partner = Factory.create(:trader, trader_list: trader_list)
+    Factory.create(:trader, trader_list: trader_list) 
+    trader = Factory.create(:trader, partner: existing_partner, trader_list: trader_list)
+    token = Factory.create(:token)
+    trader.take_token token
+    trader.step
+    potential_partners = (trader_list.traders - [trader])
+    potential_partners.map{|p| p.public_tokens.include? token}.must_be :include?, true
+  end
+
   def test_get_round_partner_creates_new_traders
     trader_list = Factory.create(:trader_list)
     trader = Factory.create(:trader, trader_list: trader_list)

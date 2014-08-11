@@ -1,4 +1,5 @@
 module BasicAlgorithm
+
   def get_round_partner
     case rand 12
     when 0,1
@@ -10,11 +11,17 @@ module BasicAlgorithm
     end
   end
 
+  def trading_step
+    partner = get_round_partner
+    pass_token(partner, @token_store.sample) if @token_store.any? && partner
+  end
+
   private
 
   def new_recruit 
     recruit = Trader.new(trader_list: @trader_list, partner: self)
     add_partner recruit
+    recruit
   end
 
   def new_partner

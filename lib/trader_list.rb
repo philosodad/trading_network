@@ -1,6 +1,6 @@
 class TraderList
   attr_reader :traders
-  def initialize opts = {}
+  def initialize
     @traders = []
   end
 end
