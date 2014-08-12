@@ -1,5 +1,7 @@
+require 'securerandom'
+require 'openssl'
 class Trader
-  attr_reader :trader_list, :id
+  attr_reader :trader_list, :id, :unique_id, :public_key
 
   class << self
     attr_reader :id, :algorithm_set, :algorithm
@@ -32,6 +34,8 @@ class Trader
     raise ArgumentError, "trader must be initialized with trader list" unless opts[:trader_list].is_a? TraderList
     set_algorithm(opts[:algorithm]) unless self.class.algorithm_set
     @id = self.class.id
+    @unique_id = SecureRandom.uuid
+    set_keys
     self.class.increment_id
     @trader_list = opts[:trader_list]
     @trader_list.traders << self
@@ -75,6 +79,11 @@ class Trader
     algorithm = Factory.constantize(algorithm)
     self.class.include algorithm
     self.class.set_algorithm algorithm
+  end
+
+  def set_keys
+    @key = OpenSSL::PKey::RSA.generate(256)
+    @public_key = @key.public_key
   end
 
 end

@@ -3,4 +3,8 @@ class TraderList
   def initialize
     @traders = []
   end
+
+  def new_partner known
+    (@traders - known).sample
+  end
 end

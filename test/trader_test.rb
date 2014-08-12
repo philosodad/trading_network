@@ -46,5 +46,10 @@ class TraderTest <  Minitest::Unit::TestCase
     trader.public_tokens.must_be :include?, token
   end
 
+  def test_has_a_public_key
+    trader_list = Factory.create(:trader_list)
+    trader = Factory.create(:trader, trader_list: TraderList.new())
+    trader.public_key.wont_be :nil?
+  end
 end
 
