@@ -31,7 +31,7 @@ class Trader
   end
 
   def initialize opts={}
-    raise ArgumentError, "trader must be initialized with trader list" unless opts[:trader_list].is_a? TraderList
+    raise ArgumentError, "trader must be initialized with trader list" unless opts[:trader_list]
     set_algorithm(opts[:algorithm]) unless self.class.algorithm_set
     @id = self.class.id
     @unique_id = SecureRandom.uuid

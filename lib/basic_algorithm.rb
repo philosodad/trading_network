@@ -11,15 +11,15 @@ module BasicAlgorithm
     end
   end
 
+  private
+
   def trading_step
     partner = get_round_partner
     pass_token(partner, @token_store.sample) if @token_store.any? && partner
   end
 
-  private
-
   def new_recruit 
-    recruit = Trader.new(trader_list: @trader_list, partner: self)
+    recruit = trader_list.new_recruit self
     add_partner recruit
     recruit
   end

@@ -1,5 +1,23 @@
 require_relative 'test_helper.rb'
 
+class FakeTrader
+  class << self
+    attr_accessor :transaction
+  end
+  def take_token token 
+    self.class.transaction = token
+  end
+end
+
+class FakeTraderList < TraderList
+  def new_partner array
+    Factory.create(:fake_trader)
+  end
+  def new_recruit caller
+    Factory.create(:fake_trader)
+  end
+end
+    
 class BasicAlgorithmTest <  Minitest::Unit::TestCase
   def test_step
     trader_list = Factory.create(:trader_list)
@@ -38,6 +56,16 @@ class BasicAlgorithmTest <  Minitest::Unit::TestCase
     chose_existing_partner.must_be_close_to rounds/2, rounds * 0.10
     chose_from_available = results.select{|result| result == initial_trader}.length
     chose_from_available.must_be_close_to rounds/3, rounds * 0.10
+  end
+
+  def test_transactions
+    trader_list = Factory.create(:fake_trader_list)
+    initial_partner = Factory.create(:fake_trader)
+    initial_trader = Factory.create(:trader, trader_list: trader_list, partner: initial_partner)
+    token = Factory.create(:token)
+    initial_trader.take_token token
+    initial_trader.step
+    FakeTrader.transaction.must_equal token
   end
 end
 
